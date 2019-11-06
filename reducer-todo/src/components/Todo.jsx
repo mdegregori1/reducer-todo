@@ -5,9 +5,7 @@ import { initialState, reducer} from "../reducers/todoReducer";
 const Todo = () => {
     const [state, dispatch] = useReducer(reducer, initialState);
     const [newTodo, setNewTodo] = useState();
-    // console.log(state);
 
-  
     const handleChanges = e => {
       setNewTodo(e.target.value);
     };
@@ -15,8 +13,9 @@ const Todo = () => {
     const handleSubmit = e => {
         e.preventDefault();
         dispatch({type: 'TOGGLE_ADD', payload: newTodo})
+        setNewTodo('')
     }
-  
+   console.log(state)
     return (
         <div>
             <h1>To Do </h1>
@@ -37,7 +36,7 @@ const Todo = () => {
                     return (
                         <div>
                             <ul>
-                                <li>{todo.item}</li> 
+                                <li style={todo.completed ? {textDecoration: 'line-through'} :null} onClick={()=>dispatch({ type: 'TOGGLE_COMPLETED', payload: todo.id})}>{todo.item}</li> 
                             </ul>
                         </div>
                     )
@@ -46,21 +45,5 @@ const Todo = () => {
         </div>
     )
 }
-// onClick={()=> dispatch({type: 'TOGGLE_EDIT'})}
 
-// - Build a form to add todos to your list
-// - Build a function that will dispatch an action to add a new todo
-// - Write the `case` in your reducer for adding a todo (You can create a unique id with `new Date()`)
-
-
-{/* <input
-className="title-input"
-type="text"
-name="newTitleText"
-value={newTitleText}
-onChange={handleChanges}
-
-/>
-<button onClick={()=> dispatch({type: 'SET_TITLE', payload: newTitleText})}>Update</button>
-</div> */}
 export default Todo;

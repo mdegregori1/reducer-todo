@@ -15,6 +15,14 @@ export const reducer =  (state, action) => {
                 id: Date.now()
             }
         return [...state, newTodo]
+        case 'TOGGLE_COMPLETED':
+            return state.map(item => {
+                if(item.id === action.payload){
+                    return {...item, completed: !item.completed}
+                } else {
+                    return item
+                }
+            })
         default: 
         return state; 
     }
