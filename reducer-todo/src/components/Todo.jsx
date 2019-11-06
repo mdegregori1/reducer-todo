@@ -4,7 +4,7 @@ import { initialState, reducer} from "../reducers/todoReducer";
 
 const Todo = () => {
     const [state, dispatch] = useReducer(reducer, initialState);
-    const [newTodo, setNewTodo] = useState();
+    const [newTodo, setNewTodo] = useState('');
 
     const handleChanges = e => {
       setNewTodo(e.target.value);
@@ -14,6 +14,11 @@ const Todo = () => {
         e.preventDefault();
         dispatch({type: 'TOGGLE_ADD', payload: newTodo})
         setNewTodo('')
+    }
+
+    const clearForm = e => {
+        e.preventDefault();
+        dispatch({type: 'CLEAR_COMPLETED', payload: state })
     }
    console.log(state)
     return (
@@ -29,14 +34,17 @@ const Todo = () => {
                  onChange={handleChanges}
                 />
                 <button type="submit">Add</button>
+                <button onClick={clearForm}>Erase</button>
                 </form>
+
+
             </div>
             <div>
                 {state.map(todo => {
                     return (
                         <div>
                             <ul>
-                                <li style={todo.completed ? {textDecoration: 'line-through'} :null} onClick={()=>dispatch({ type: 'TOGGLE_COMPLETED', payload: todo.id})}>{todo.item}</li> 
+                                <li style={todo.completed ? {textDecoration: 'line-through'} : {textDecoration: 'none'}} onClick={()=>dispatch({ type: 'TOGGLE_COMPLETED', payload: todo.id})}>{todo.item}</li> 
                             </ul>
                         </div>
                     )
